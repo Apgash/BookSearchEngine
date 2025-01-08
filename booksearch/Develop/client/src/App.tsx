@@ -1,14 +1,4 @@
-import './App.css';
-import { Outlet } from 'react-router-dom';
-
-import Navbar from './components/Navbar';
-
-function App() {
-  return (
-    <>
-      <Navbar />
-      <Outlet />
-    </>import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
+import { ApolloProvider, ApolloClient, InMemoryCache } from '@apollo/client';
 import './App.css';
 import { Outlet } from 'react-router-dom';
 import Navbar from './components/Navbar';
@@ -24,10 +14,6 @@ function App() {
       <Navbar />
       <Outlet />
     </ApolloProvider>
-  );
-}
-
-export default App;
   );
 }
 
