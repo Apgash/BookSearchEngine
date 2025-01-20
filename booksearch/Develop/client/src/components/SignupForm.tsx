@@ -3,7 +3,7 @@ import type { ChangeEvent, FormEvent } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
 import { ADD_USER } from '../utils/mutations';
-import Auth from '../utils/auth';
+import AuthService from '../utils/auth';
 import type { User } from '../models/User';
 
 const SignupForm = ({ handleModalClose }: { handleModalClose: () => void }) => {
@@ -27,11 +27,16 @@ const SignupForm = ({ handleModalClose }: { handleModalClose: () => void }) => {
     }
 
     try {
-      const { data } = await addUser({
+      await addUser({
         variables: { ...userFormData },
       });
 
-      Auth.login(data.addUser.token);
+      if (userFormData.username && userFormData.password) {
+        AuthService.login(userFormData.username, userFormData.password); // Use AuthService instead of Auth
+      } else {
+        console.error('Username or password is null');
+        setShowAlert(true);
+      }
       handleModalClose();
     } catch (err) {
       console.error(err);
@@ -44,7 +49,7 @@ const SignupForm = ({ handleModalClose }: { handleModalClose: () => void }) => {
       password: '',
       savedBooks: [],
     });
-  };
+  }
 
   return (
     <>

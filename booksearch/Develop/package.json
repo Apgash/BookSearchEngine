@@ -14,11 +14,14 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.7",
     "concurrently": "^8.2.0"
   },
   "dependencies": {
     "@apollo/client": "^3.12.4",
+    "@types/express": "^5.0.0",
     "apollo-server-express": "^3.13.0",
-    "graphql": "^16.10.0"
+    "graphql": "^16.10.0",
+    "jsonwebtoken": "^9.0.2"
   }
 }

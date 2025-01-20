@@ -1,5 +1,6 @@
 // use this to decode a token and get the user's information out of it
 import { jwtDecode } from 'jwt-decode';
+import jwt from 'jsonwebtoken';
 
 interface UserToken {
   name: string;
@@ -11,6 +12,11 @@ class AuthService {
   // get user data
   getProfile() {
     return jwtDecode(this.getToken() || '');
+  }
+
+  // get token from local storage
+  getToken() {
+    return localStorage.getItem('id_token');
   }
 
   // check if user's logged in
@@ -34,23 +40,32 @@ class AuthService {
     }
   }
 
-  getToken() {
-    // Retrieves the user token from localStorage
-    return localStorage.getItem('id_token');
+  // login method
+  static login(username: string, password: string): Promise<any> {
+    // Implementation of login method
+    return new Promise((resolve, reject) => {
+      // Simulate an API call
+      if (username === 'user' && password === 'pass') {
+        resolve({ success: true });
+      } else {
+        reject({ success: false });
+      }
+    });
   }
 
-  login(idToken: string) {
-    // Saves user token to localStorage
-    localStorage.setItem('id_token', idToken);
-    window.location.assign('/');
-  }
-
-  logout() {
-    // Clear user token and profile data from localStorage
-    localStorage.removeItem('id_token');
-    // this will reload the page and reset the state of the application
-    window.location.assign('/');
-  }
+  // other methods...
 }
 
-export default new AuthService();
+// Define the signToken function
+function signToken(user: { _id: string }) {
+  const secret = 'bruh';
+  const expiration = '2h';
+
+  return jwt.sign({ data: user }, secret, { expiresIn: expiration });
+}
+
+// Export the signToken function
+export { signToken };
+
+// Export the AuthService class
+export default AuthService;
