@@ -11,23 +11,38 @@ interface UserToken {
 class AuthService {
   // get user data
   getProfile() {
-    return jwtDecode(this.getToken() || '');
+    return jwtDecode(AuthService.getToken() || '');
   }
 
   // get token from local storage
-  getToken() {
+  static getToken() {
     return localStorage.getItem('id_token');
   }
 
   // check if user's logged in
-  loggedIn() {
+  static loggedIn() {
     // Checks if there is a saved token and it's still valid
     const token = this.getToken();
-    return !!token && !this.isTokenExpired(token); // handwaiving here
+    if (!token) {
+      return false;
+    }
+
+    try {
+      const isExpired = this.isTokenExpired(token);
+      if (isExpired) {
+        console.warn("Token is expired");
+        return false;
+      }
+      return true;
+    } catch (err) {
+      console.error("Error checking if token is expired:", err);
+      return false;
+    }
   }
 
+
   // check if token is expired
-  isTokenExpired(token: string) {
+  static isTokenExpired(token: string) {
     try {
       const decoded = jwtDecode<UserToken>(token);
       if (decoded.exp < Date.now() / 1000) {
@@ -53,7 +68,13 @@ class AuthService {
     });
   }
 
-  // other methods...
+  static logout() {
+    // Clear user token and profile data from localStorage
+    localStorage.removeItem('id_token');
+    localStorage.removeItem('profile');
+    // This will reload the page and reset the state of the application
+    window.location.assign('/');
+  }
 }
 
 // Define the signToken function
