@@ -1,9 +1,10 @@
 import express from 'express';
 import path from 'node:path';
 import { ApolloServer } from 'apollo-server-express';
-import { typeDefs, resolvers } from './Schemas';
 import db from './config/connection.js';
 import routes from './routes/index.js';
+import { typeDefs } from './Schemas/typeDefs.js';
+import { resolvers } from './Schemas/resolver.js';
 
 const app = express();
 const PORT = process.env.PORT || 3001;

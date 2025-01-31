@@ -15,7 +15,8 @@
   "license": "ISC",
   "devDependencies": {
     "@types/jsonwebtoken": "^9.0.7",
-    "concurrently": "^8.2.0"
+    "concurrently": "^8.2.0",
+    "ts-node": "^10.9.2"
   },
   "dependencies": {
     "@apollo/client": "^3.12.4",
