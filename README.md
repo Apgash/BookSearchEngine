@@ -4,7 +4,6 @@ This code uses the Google Books API to help you find new books to read and can e
 
 ## Table of Contents
 - [Description](#description)
-- [Installation](#installation)
 - [Usage](#usage)
 - [Contribution](#contribution)
 - [Questions](#questions)
